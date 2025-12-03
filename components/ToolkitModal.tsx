@@ -10,6 +10,7 @@ import {
     ChevronRightIcon,
     FileIcon,
     MaximizeIcon,
+    MinimizeIcon,
     SendIcon,
     ChatIcon,
     WandIcon,
@@ -117,6 +118,7 @@ const SimpleCodeEditor: React.FC<{ code: string; onChange: (v: string) => void; 
 export default function ToolkitModal({ isOpen, onClose, skill }: ToolkitModalProps) {
     const [activeTab, setActiveTab] = useState<'learn' | 'practice' | 'codeforces'>('learn');
     const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [isFullscreen, setIsFullscreen] = useState(false);
     const { playClick, playOpen, playClose, playHover } = useSoundEffects();
     
     // Content State
@@ -141,6 +143,7 @@ export default function ToolkitModal({ isOpen, onClose, skill }: ToolkitModalPro
         if (isOpen) {
             playOpen();
             setActiveTab('learn');
+            setIsFullscreen(false);
             generateTutorial('Intro');
             setCode(skill === 'Python' ? `print("Hello ${skill}!")` : `console.log("Hello ${skill}!");`);
         }
@@ -282,10 +285,10 @@ export default function ToolkitModal({ isOpen, onClose, skill }: ToolkitModalPro
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-4 animate-in">
+        <div className={`fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-4 animate-in ${isFullscreen ? '!p-0' : ''}`}>
             <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
             
-            <div className="relative w-full h-full max-w-[95vw] max-h-[95vh] bg-[#1e1e1e] text-[#d4d4d4] flex flex-col md:rounded-xl shadow-2xl overflow-hidden border border-[#333] font-sans">
+            <div className={`relative bg-[#1e1e1e] text-[#d4d4d4] flex flex-col shadow-2xl overflow-hidden border border-[#333] font-sans transition-all duration-300 ${isFullscreen ? 'w-full h-full rounded-none border-0' : 'w-full h-full max-w-[95vw] max-h-[95vh] md:rounded-xl'}`}>
                 
                 {/* Header */}
                 <header className="h-12 bg-[#252526] flex items-center justify-between px-4 border-b border-[#333] shrink-0">
@@ -301,7 +304,7 @@ export default function ToolkitModal({ isOpen, onClose, skill }: ToolkitModalPro
                         {['learn', 'practice', 'codeforces'].map((t) => (
                             <button 
                                 key={t} 
-                                onClick={() => { setActiveTab(t as any); if(t === 'codeforces') loadProblems(); }}
+                                onClick={() => { setActiveTab(t as any); setIsFullscreen(false); if(t === 'codeforces') loadProblems(); }}
                                 className={`px-4 py-1.5 text-xs font-bold uppercase ${activeTab === t ? 'bg-[#007acc] text-white' : 'text-gray-400 hover:text-white'}`}
                             >
                                 {t}
@@ -309,14 +312,16 @@ export default function ToolkitModal({ isOpen, onClose, skill }: ToolkitModalPro
                         ))}
                     </div>
 
-                    <button onClick={onClose} className="p-1 hover:bg-red-500/20 hover:text-red-500 rounded"><XIcon size={18}/></button>
+                    <div className="flex items-center gap-2">
+                         <button onClick={onClose} className="p-1 hover:bg-red-500/20 hover:text-red-500 rounded"><XIcon size={18}/></button>
+                    </div>
                 </header>
 
                 {/* Body */}
                 <div className="flex-grow flex overflow-hidden">
                     
                     {/* Sidebar */}
-                    <div className={`${sidebarOpen ? 'w-60' : 'w-0'} bg-[#252526] border-r border-[#333] flex-shrink-0 transition-all duration-300 overflow-y-auto`}>
+                    <div className={`${sidebarOpen && !isFullscreen ? 'w-60' : 'w-0'} bg-[#252526] border-r border-[#333] flex-shrink-0 transition-all duration-300 overflow-y-auto`}>
                         {activeTab === 'learn' && (
                             <div className="py-2">
                                 <div className="px-4 py-2 text-xs font-bold text-gray-500 uppercase">Tutorial</div>
@@ -355,7 +360,7 @@ export default function ToolkitModal({ isOpen, onClose, skill }: ToolkitModalPro
                     <div className="flex-grow flex flex-col md:flex-row min-w-0">
                         
                         {/* Left Panel (Tutorial or Problem Desc) */}
-                        <div className={`flex-1 overflow-y-auto custom-scrollbar p-6 md:border-r border-[#333] ${activeTab === 'practice' ? 'hidden md:block w-1/3 max-w-sm' : ''}`}>
+                        <div className={`flex-1 overflow-y-auto custom-scrollbar p-6 md:border-r border-[#333] ${activeTab === 'practice' ? 'hidden md:block w-1/3 max-w-sm' : ''} ${isFullscreen ? '!hidden' : ''}`}>
                             {activeTab === 'learn' ? (
                                 <>
                                     {isLoading ? <Loader /> : (
@@ -412,6 +417,13 @@ export default function ToolkitModal({ isOpen, onClose, skill }: ToolkitModalPro
                                         <FileIcon size={14}/> main.{skill === 'Python' ? 'py' : 'js'}
                                     </div>
                                     <div className="flex items-center gap-2">
+                                        <button 
+                                            onClick={() => setIsFullscreen(!isFullscreen)}
+                                            className="p-1 hover:bg-[#333] text-gray-400 hover:text-white rounded transition-colors mr-2"
+                                            title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+                                        >
+                                             {isFullscreen ? <MinimizeIcon size={14} /> : <MaximizeIcon size={14} />}
+                                        </button>
                                         <button 
                                             onClick={handleAutoFix}
                                             disabled={isFixing || isJudging}
