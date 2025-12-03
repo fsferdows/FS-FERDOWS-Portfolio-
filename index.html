@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="The official portfolio website of Fs Ferdows, showcasing research, insights, and projects in digital ethics and AI.">
+  <meta name="keywords" content="Fs Ferdows, AI Researcher, Portfolio, Digital Ethics, Machine Learning, Web Development, Generative AI, Creative Technologist">
+  <meta name="author" content="Fs Ferdows">
+  <meta name="theme-color" content="#3b82f6">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fsferdows.com/">
+  <meta property="og:title" content="Fs Ferdows - AI Researcher & Developer">
+  <meta property="og:description" content="Explore the portfolio of Fs Ferdows, featuring projects in AI, machine learning, and digital ethics.">
+  <meta property="og:image" content="https://fsferdows.com/og-image.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://fsferdows.com/">
+  <meta property="twitter:title" content="Fs Ferdows - AI Researcher & Developer">
+  <meta property="twitter:description" content="Explore the portfolio of Fs Ferdows, featuring projects in AI, machine learning, and digital ethics.">
+  <meta property="twitter:image" content="https://fsferdows.com/og-image.jpg">
+
+  <title>Fs Ferdows - Personal Portfolio</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Fira Code for the IDE & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Prism.js for Syntax Highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+  
+  <style>
+    :root {
+      /* Premium Dark Palette */
+      --accent-hsl: 217 91% 60%; /* Vivid Blue */
+      
+      /* Light Theme (default) */
+      --background-primary-hsl: 220 14% 96%;
+      --background-secondary-hsl: 220 14% 93%;
+      --background-tertiary-hsl: 220 14% 88%;
+      --text-primary-hsl: 220 20% 10%;
+      --text-secondary-hsl: 220 10% 40%;
+      --glass-bg: 220 14% 96% / 0.6;
+      --glass-border: 220 14% 88% / 0.6;
+    }
+
+    html.dark {
+      /* Deep Space Dark Theme */
+      --background-primary-hsl: 222 47% 6%;    /* #080c14 */
+      --background-secondary-hsl: 222 47% 10%; /* #0d131f */
+      --background-tertiary-hsl: 222 47% 14%;  /* #131b2c */
+      --text-primary-hsl: 210 40% 98%;
+      --text-secondary-hsl: 215 20% 75%;
+      --glass-bg: 222 47% 10% / 0.4;
+      --glass-border: 217 91% 60% / 0.1;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+    body {
+        background-color: hsl(var(--background-primary-hsl));
+        color: hsl(var(--text-primary-hsl));
+        font-family: 'Inter', sans-serif;
+        transition: background-color 0.5s cubic-bezier(0.23, 1, 0.32, 1), color 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        overflow-x: hidden; /* Prevent horizontal scroll from effects */
+    }
+
+    /* Animation Keyframes */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px) rotateX(-5deg);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) rotateX(0deg);
+        }
+    }
+
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+    
+    /* IDE Specific Animations */
+    @keyframes ideEnter {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateZ(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateZ(0);
+      }
+    }
+
+    @keyframes glitch-anim {
+      0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 1px); }
+      20% { clip-path: inset(60% 0 10% 0); transform: translate(2px, -1px); }
+      40% { clip-path: inset(40% 0 50% 0); transform: translate(-2px, 2px); }
+      60% { clip-path: inset(80% 0 5% 0); transform: translate(2px, -2px); }
+      80% { clip-path: inset(10% 0 70% 0); transform: translate(-1px, 1px); }
+      100% { clip-path: inset(30% 0 50% 0); transform: translate(1px, -1px); }
+    }
+
+    /* Utilities */
+    .animate-in {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+    
+    .animate-fade-in-up {
+        opacity: 0;
+        animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        animation-delay: var(--animation-delay, 0s);
+    }
+    
+    .staggered-child {
+        opacity: 0;
+        animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        animation-delay: calc(var(--stagger-index, 0) * 100ms);
+    }
+    
+    /* IDE & Code Styles */
+    code, pre, .font-mono {
+        font-family: 'Fira Code', monospace;
+        font-variant-ligatures: normal;
+    }
+
+    /* Custom Scrollbar - High End */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: hsl(var(--text-secondary-hsl) / 0.2);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: hsl(var(--accent-hsl));
+    }
+
+    /* Hide Scrollbar for cleaner UI where needed */
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    ::selection {
+      background: hsl(var(--accent-hsl) / 0.3);
+      color: white;
+    }
+    
+    /* 3D Perspective Utilities */
+    .perspective-2000 {
+      perspective: 2000px;
+    }
+    .transform-style-preserve-3d {
+      transform-style: preserve-3d;
+    }
+  </style>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'background-primary': 'hsl(var(--background-primary-hsl))',
+            'background-secondary': 'hsl(var(--background-secondary-hsl))',
+            'background-tertiary': 'hsl(var(--background-tertiary-hsl))',
+            'text-primary': 'hsl(var(--text-primary-hsl))',
+            'text-secondary': 'hsl(var(--text-secondary-hsl))',
+            'accent': 'hsl(var(--accent-hsl))',
+            'glass-bg': 'hsla(var(--glass-bg))',
+            'glass-border': 'hsla(var(--glass-border))',
+          },
+          fontFamily: {
+             mono: ['"Fira Code"', 'monospace'],
+             sans: ['"Inter"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "zustand": "https://aistudiocdn.com/zustand@^5.0.8",
+    "uuid": "https://aistudiocdn.com/uuid@^13.0.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.1",
+    "three": "https://aistudiocdn.com/three@^0.168.0",
+    "@react-three/fiber": "https://aistudiocdn.com/@react-three/fiber@^8.16.8",
+    "@react-three/drei": "https://aistudiocdn.com/@react-three/drei@^9.110.1",
+    "lottie-react": "https://aistudiocdn.com/lottie-react@^2.4.0"
+  }
+}
+</script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
